@@ -12,7 +12,8 @@ import {
   ScreenProviderInterface,
   TextFinderInterface,
   WindowFinderInterface,
-  WindowProviderInterface
+  WindowProviderInterface,
+  ElementInspectionProviderInterface
 } from "@nut-tree/provider-interfaces";
 
 import ImageReaderImpl from "./io/jimp-image-reader.class";
@@ -45,6 +46,7 @@ class DefaultProviderRegistry implements ProviderRegistry {
   private _textFinder?: TextFinderInterface;
   private _windowFinder?: WindowFinderInterface;
   private _colorFinder?: ColorFinderInterface;
+  private _windowElementInspector?: ElementInspectionProviderInterface;
 
   hasClipboard(): boolean {
     return this._clipboard != null;
@@ -188,6 +190,20 @@ class DefaultProviderRegistry implements ProviderRegistry {
   registerWindowFinder = (value: WindowFinderInterface) => {
     this._windowFinder = value;
     this.getLogProvider().trace("Registered new WindowFinder provider", value);
+  };
+
+  getWindowElementInspector = (): ElementInspectionProviderInterface => {
+    if (this._windowElementInspector) {
+      return this._windowElementInspector;
+    }
+    const error = new Error(`No WindowElementInspector registered`);
+    this.getLogProvider().error(error);
+    throw error;
+  };
+
+  registerWindowElementInspector = (value: ElementInspectionProviderInterface) => {
+    this._windowElementInspector = value;
+    this.getLogProvider().trace("Registered new WindowElementInspector provider", value);
   };
 
   hasImageReader(): boolean {

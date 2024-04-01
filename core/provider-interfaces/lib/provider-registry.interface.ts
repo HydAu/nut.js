@@ -1,6 +1,7 @@
 import {
   ClipboardProviderInterface,
   ColorFinderInterface,
+  ElementInspectionProviderInterface,
   ImageFinderInterface,
   ImageProcessor,
   ImageReader,
@@ -86,6 +87,10 @@ export interface ProviderRegistry {
   getWindowFinder(): WindowFinderInterface;
 
   registerWindowFinder(value: WindowFinderInterface): void;
+
+  getWindowElementInspector(): ElementInspectionProviderInterface;
+
+  registerWindowElementInspector(value: ElementInspectionProviderInterface): void;
 
   hasColorFinder(): boolean;
 
