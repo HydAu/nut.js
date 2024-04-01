@@ -1,4 +1,4 @@
-import { Point, Region, Size } from "../objects";
+import { OptionalSearchParameters, Point, Region, Size, WindowElementQuery } from "../objects";
 import { WindowElement } from "./window-element.interface";
 import { PointResultFindInput, RegionResultFindInput, WindowElementResultFindInput } from "./index";
 
@@ -22,6 +22,15 @@ export interface WindowInterface {
   findAll(
     searchInput: WindowElementResultFindInput | Promise<WindowElementResultFindInput>
   ): Promise<WindowElement[]>;
+
+  waitFor<PROVIDER_DATA_TYPE>(
+    searchInput: WindowElementQuery | Promise<WindowElementQuery>,
+    timeoutMs?: number,
+    updateInterval?: number,
+    params?: OptionalSearchParameters<PROVIDER_DATA_TYPE>
+  ): Promise<WindowElement>;
+
+  on(searchInput: WindowElementQuery, callback: WindowElementCallback): void;
 }
 
 export type WindowedFindInput =
