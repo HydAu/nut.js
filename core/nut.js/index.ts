@@ -8,7 +8,15 @@ import { LineHelper } from "./lib/util/linehelper.class";
 import { createWindowApi } from "./lib/window.function";
 import providerRegistry from "./lib/provider/provider-registry.class";
 import { loadImageResource } from "./lib/imageResources.function";
-import { ColorQuery, LineQuery, RGBA, WindowQuery, WordQuery } from "@nut-tree/shared";
+import {
+  ColorQuery,
+  LineQuery,
+  RGBA,
+  WindowElementDescription,
+  WindowElementQuery,
+  WindowQuery,
+  WordQuery
+} from "@nut-tree/shared";
 
 export {
   AssertClass,
@@ -91,6 +99,16 @@ const windowWithTitle = (title: string | RegExp): WindowQuery => {
   };
 };
 
+const windowElementDescribedBy = (description: WindowElementDescription): WindowElementQuery => {
+  return {
+    type: "window-element",
+    id: `window-element-described-by-${JSON.stringify(description)}`,
+    by: {
+      description
+    }
+  };
+};
+
 const pixelWithColor = (color: RGBA): ColorQuery => {
   return {
     type: "color",
@@ -122,5 +140,6 @@ export {
   singleWord,
   textLine,
   windowWithTitle,
+  windowElementDescribedBy,
   pixelWithColor
 };
