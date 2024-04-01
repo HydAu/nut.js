@@ -1,4 +1,5 @@
 import { RGBA } from "./rgba.class";
+import { WindowElementDescription } from "../types";
 
 type Query =
   | {
@@ -27,6 +28,12 @@ type Query =
   type: "color";
   by: {
     color: RGBA;
+  }
+} | {
+  id: string;
+  type: "window-element";
+  by: {
+    description: WindowElementDescription;
   };
 };
 
@@ -49,6 +56,12 @@ export type LineQuery = Extract<TextQuery, { by: { line: string } }>;
  * It will be processed by an {@link WindowFinderInterface} instance.
  */
 export type WindowQuery = Extract<Query, { type: "window" }>;
+
+/**
+ * A window element query is a query that searches for an element of a window.
+ * It will be processed by an {@link ElementInspectionProviderInterface} instance.
+ */
+export type WindowElementQuery = Extract<Query, { type: "window-element" }>;
 
 /**
  * A color query is a query that searches for a certain RGBA color on screen.
@@ -98,4 +111,14 @@ export const isWindowQuery = (
   possibleQuery: any
 ): possibleQuery is WindowQuery => {
   return possibleQuery?.type === "window";
+};
+
+/**
+ * Type guard for {@link WindowElementQuery}
+ * @param possibleQuery A possible window element query
+ */
+export const isWindowElementQuery = (
+  possibleQuery: any
+): possibleQuery is WindowElementQuery => {
+  return possibleQuery?.type === "window-element";
 };
