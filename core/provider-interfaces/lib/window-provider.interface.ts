@@ -49,4 +49,14 @@ export interface WindowProviderInterface {
    * {@link resizeWindow} Resizes the window addressed via its window handle to a new {@link Size}
    */
   resizeWindow(windowHandle: number, newSize: Size): Promise<boolean>;
+
+  /**
+   * {@link minimizeWindow} Minimizes the window addressed via its window handle
+   */
+  minimizeWindow(windowHandle: number): Promise<boolean>;
+
+  /**
+   * {@link restoreWindow} Restores a window addressed via its window handle
+   */
+  restoreWindow(windowHandle: number): Promise<boolean>;
 }

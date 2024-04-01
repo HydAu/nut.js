@@ -80,4 +80,12 @@ export default class WindowAction implements WindowProviderInterface {
       }
     });
   }
+
+  minimizeWindow(_: number): Promise<boolean> {
+    throw new Error("Method not implemented in libnut.");
+  }
+
+  restoreWindow(_: number): Promise<boolean> {
+    throw new Error("Method not implemented in libnut.");
+  }
 }
