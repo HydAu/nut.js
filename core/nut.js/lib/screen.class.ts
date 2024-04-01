@@ -2,6 +2,7 @@ import { cwd } from "process";
 import {
   ColorQuery,
   FileType,
+  FindHookCallback,
   FindInput,
   FindResult,
   Image,
@@ -13,12 +14,13 @@ import {
   isWindowQuery,
   LineQuery,
   MatchRequest,
-  MatchResult,
+  MatchResultCallback,
   OptionalSearchParameters,
   Point,
   PointResultFindInput,
   Region,
   RegionResultFindInput,
+  WindowCallback,
   WindowResultFindInput,
   WordQuery
 } from "@nut-tree/shared";
@@ -33,15 +35,6 @@ import {
   isPointResultFindInput,
   isRegionResultFindInput
 } from "./screen-helpers.function";
-
-export type WindowCallback = (target: Window) => void | Promise<void>;
-export type MatchResultCallback<TARGET_TYPE> = (
-  target: MatchResult<TARGET_TYPE>
-) => void | Promise<void>;
-export type FindHookCallback =
-  | WindowCallback
-  | MatchResultCallback<Point>
-  | MatchResultCallback<Region>;
 
 function validateSearchRegion(
   search: Region,
@@ -333,6 +326,10 @@ export class ScreenClass {
     searchInput: WindowResultFindInput | Promise<WindowResultFindInput>,
     params?: OptionalSearchParameters<PROVIDER_DATA_TYPE>
   ): Promise<Window[]>;
+  public async findAll<PROVIDER_DATA_TYPE>(
+    searchInput: FindInput | Promise<FindInput>,
+    params?: OptionalSearchParameters<PROVIDER_DATA_TYPE>
+  ): Promise<FindResult[]>;
   public async findAll<PROVIDER_DATA_TYPE>(
     searchInput: FindInput | Promise<FindInput>,
     params?: OptionalSearchParameters<PROVIDER_DATA_TYPE>

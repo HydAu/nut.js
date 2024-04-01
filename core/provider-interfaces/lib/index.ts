@@ -14,3 +14,4 @@ export * from './text-finder.interface';
 export * from './window-finder.interface';
 export * from './window-provider.interface';
 export * from './provider-registry.interface';
+export * from './element-inspection-provider.interface';
