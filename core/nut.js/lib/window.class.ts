@@ -135,7 +135,6 @@ export class Window implements WindowInterface {
   public async findAll(
     searchInput: WindowElementResultFindInput | Promise<WindowElementResultFindInput>
   ): Promise<WindowElement[]> {
-    // return this.providerRegistry.getWindowElementInspector().findElement(this.windowHandle, description);
     const needle = await searchInput;
     this.providerRegistry.getLogProvider().info(`Searching for ${needle} in window ${this.windowHandle}`);
 
