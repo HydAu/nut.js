@@ -7,10 +7,11 @@ import {
   WindowProviderInterface
 } from "@nut-tree/provider-interfaces";
 import { mockPartial } from "sneer";
-import { Region, WindowElement, WindowElementDescription } from "@nut-tree/shared";
-import { windowElementDescribedBy } from "../index";
+import { Region, RGBA, WindowElement, WindowElementDescription } from "@nut-tree/shared";
+import { pixelWithColor, windowElementDescribedBy } from "../index";
 import { NoopLogProvider } from "./provider/log/noop-log-provider.class";
 
+jest.setTimeout(50000);
 describe("Window class", () => {
   it("should retrieve the window region via provider", async () => {
     // GIVEN
@@ -140,6 +141,83 @@ describe("Window class", () => {
       // THEN
       expect(elementInspectorMock).toHaveBeenCalledTimes(1);
       expect(elementInspectorMock).toHaveBeenCalledWith(mockWindowHandle, description);
+    });
+
+    describe("invalid input", () => {
+      it("should throw on invalid input to find", async () => {
+        // GIVEN
+        const elementInspectorMock = jest.fn();
+        const providerRegistryMock = mockPartial<ProviderRegistry>({
+          getWindowElementInspector(): ElementInspectionProviderInterface {
+            return mockPartial<ElementInspectionProviderInterface>({
+              findElement: elementInspectorMock,
+              findElements: elementInspectorMock
+            });
+          },
+          getLogProvider(): LogProviderInterface {
+            return new NoopLogProvider();
+          }
+        });
+        const mockWindowHandle = 123;
+        const description = new RGBA(255, 0, 255, 255);
+        const SUT = new Window(providerRegistryMock, mockWindowHandle);
+
+        // WHEN
+        const test = () => SUT.find(pixelWithColor(description) as any);
+
+        // THEN
+        await expect(test).rejects.toThrowError(/.*'Error: Search input is not supported. Please use a valid search input type.'$/);
+      });
+
+      it("should throw on invalid input to findAll", async () => {
+        // GIVEN
+        const elementInspectorMock = jest.fn();
+        const providerRegistryMock = mockPartial<ProviderRegistry>({
+          getWindowElementInspector(): ElementInspectionProviderInterface {
+            return mockPartial<ElementInspectionProviderInterface>({
+              findElement: elementInspectorMock,
+              findElements: elementInspectorMock
+            });
+          },
+          getLogProvider(): LogProviderInterface {
+            return new NoopLogProvider();
+          }
+        });
+        const mockWindowHandle = 123;
+        const description = new RGBA(255, 0, 255, 255);
+        const SUT = new Window(providerRegistryMock, mockWindowHandle);
+
+        // WHEN
+        const test = () => SUT.findAll(pixelWithColor(description) as any);
+
+        // THEN
+        await expect(test).rejects.toThrowError(/.*'Error: Search input is not supported. Please use a valid search input type.'$/);
+      });
+
+      it("should throw on invalid input to waitFor", async () => {
+        // GIVEN
+        const elementInspectorMock = jest.fn();
+        const providerRegistryMock = mockPartial<ProviderRegistry>({
+          getWindowElementInspector(): ElementInspectionProviderInterface {
+            return mockPartial<ElementInspectionProviderInterface>({
+              findElement: elementInspectorMock,
+              findElements: elementInspectorMock
+            });
+          },
+          getLogProvider(): LogProviderInterface {
+            return new NoopLogProvider();
+          }
+        });
+        const mockWindowHandle = 123;
+        const description = new RGBA(255, 0, 255, 255);
+        const SUT = new Window(providerRegistryMock, mockWindowHandle);
+
+        // WHEN
+        const test = () => SUT.waitFor(pixelWithColor(description) as any, 100, 50);
+
+        // THEN
+        await expect(test).rejects.toMatch(/.*'Error: Search input is not supported.*$/);
+      });
     });
 
     describe("hooks", () => {
