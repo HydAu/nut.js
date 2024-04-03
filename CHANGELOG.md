@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.1.0
+
+- Enhancement: Extend `WindowProviderInterface` with `minimizeWindow` and `restoreWindow` functions
+- Feature: Introduce `WindowElementQuery` type and extend `Window` class with `find`, `findAll`, `waitFor` and find hooks
+
 ## 4.0.1
 
 - Enhancement: Fix channel info for image loader to 4 to avoid processing errors
