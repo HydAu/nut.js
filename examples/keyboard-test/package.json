@@ -1,6 +1,6 @@
 {
   "name": "sample-keyboard",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "private": true,
   "description": "A simple nut.js test example which tests keyboard control",
   "main": "index.js",
